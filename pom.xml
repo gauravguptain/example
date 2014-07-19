@@ -10,6 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <flyway.version>3.0</flyway.version>
         <jsp.version>2.2</jsp.version>
         <javax.servlet.version>3.0.1</javax.servlet.version>
         <commons.lang.version>3.1</commons.lang.version>
@@ -28,6 +29,8 @@
         <junit.version>4.11</junit.version>
         <dbunit.version>2.4.9</dbunit.version>
         <jmock.version>2.6.0</jmock.version>
+        <mockito.version>1.9.5</mockito.version>
+        <springockito.version>1.0.9</springockito.version>
         <maven.compiler.version>3.1</maven.compiler.version>
         <maven.surefire.version>2.16</maven.surefire.version>
         <maven.properties.version>1.0-alpha-2</maven.properties.version>
@@ -43,9 +46,11 @@
         <jdbc.groupId>mysql</jdbc.groupId>
         <jdbc.artifactId>mysql-connector-java</jdbc.artifactId>
         <jdbc.version>5.1.27</jdbc.version>
+        <jdbc.driverClassName>${database.driverClassName}</jdbc.driverClassName>
+        <jdbc.url>${database.jdbcUrl}</jdbc.url>
     </properties>
 
-    <profiles>
+    <profiles>Added Sample Dao, Integrated Mockito and Springockito, added test for Sample service.
         <profile>
             <id>dev</id>
             <activation>
@@ -170,24 +175,24 @@
                 </executions>
             </plugin>
             <!-- TODO USE maven migration plugin -->
-            <!--<plugin>-->
-                <!--<groupId>com.googlecode.flyway</groupId>-->
-                <!--<artifactId>flyway-maven-plugin</artifactId>-->
-                <!--<version>${flyway.version}</version>-->
-                <!--<configuration>-->
-                    <!--<url>${jdbc.url}</url>-->
-                    <!--<user>${database.username}</user>-->
-                    <!--<password>${database.password}</password>-->
-                    <!--<initVersion>0</initVersion>-->
-                <!--</configuration>-->
-                <!--<dependencies>-->
-                    <!--<dependency>-->
-                        <!--<groupId>${jdbc.groupId}</groupId>-->
-                        <!--<artifactId>${jdbc.artifactId}</artifactId>-->
-                        <!--<version>${jdbc.version}</version>-->
-                    <!--</dependency>-->
-                <!--</dependencies>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
+                <configuration>
+                    <url>${jdbc.url}</url>
+                    <user>${database.username}</user>
+                    <password>${database.password}</password>
+                    <initVersion>0</initVersion>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>${jdbc.groupId}</groupId>
+                        <artifactId>${jdbc.artifactId}</artifactId>
+                        <version>${jdbc.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -419,6 +424,18 @@
             <groupId>org.jmock</groupId>
             <artifactId>jmock</artifactId>
             <version>${jmock.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.kubek2k</groupId>
+            <artifactId>springockito-annotations</artifactId>
+            <version>${springockito.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

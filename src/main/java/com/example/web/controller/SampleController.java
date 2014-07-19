@@ -2,9 +2,11 @@ package com.example.web.controller;
 
 import com.example.bean.AppProperties;
 import com.example.bean.SampleBean;
+import com.example.service.SampleService;
 import com.example.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,9 @@ import java.util.List;
 @RequestMapping(value = "/api", produces = MediaType.APPLICATION_JSON_VALUE)
 public class SampleController {
 
+    @Autowired
+    private SampleService sampleService;
+
     private static final Logger LOG = LoggerFactory.getLogger(SampleController.class);
 
     @RequestMapping(
@@ -40,13 +45,7 @@ public class SampleController {
         LOG.info("index: {}", index);
         LOG.info("inputBean:\n{}", JsonUtils.toJson(inputBean));
 
-        String oldName = inputBean.getName();
-
-        String newName = oldName + '-' + otherName;
-        if (index != null) {
-            newName += '-' + index.toString();
-        }
-        return new SampleBean(newName);
+        return sampleService.hello(inputBean,otherName, index);
     }
 
     @RequestMapping(
