@@ -41,6 +41,7 @@
         <cobertura.version>2.6</cobertura.version>
         <maven.pmd.version>3.0.1</maven.pmd.version>
         <findbugs.maven.version>2.5.3</findbugs.maven.version>
+        <flyway.SQL.directory>./src/main/resources/db/migration</flyway.SQL.directory>
 
         <!-- Database properties -->
         <jdbc.groupId>org.postgresql</jdbc.groupId>
@@ -209,6 +210,13 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>findbugs-maven-plugin</artifactId>
                 <version>${findbugs.maven.version}</version>
+            </plugin>
+            <!-- Flyway file plugin is not in Central Repo, Install it in local repo.
+                https://github.com/YiyuJia/flywayFile -->
+            <plugin>
+                <groupId>org.idatamining</groupId>
+                <artifactId>maven-flywayFile-plugin</artifactId>
+                <version>2.0</version>
             </plugin>
         </plugins>
         <extensions>
