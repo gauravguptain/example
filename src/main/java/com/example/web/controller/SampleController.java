@@ -2,7 +2,9 @@ package com.example.web.controller;
 
 import com.example.bean.AppProperties;
 import com.example.bean.SampleBean;
+import com.example.bean.User;
 import com.example.service.SampleService;
+import com.example.service.UserService;
 import com.example.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,9 @@ public class SampleController {
 
     @Autowired
     private SampleService sampleService;
+
+    @Autowired
+    private UserService userService;
 
     private static final Logger LOG = LoggerFactory.getLogger(SampleController.class);
 
@@ -59,6 +64,16 @@ public class SampleController {
         emails.add("gaurav.gupta@joshlabs.in");
         emails.add("gaurav.gupta.in@gmail.com");
         return new AppProperties("Example", "Staging", emails);
+    }
+
+    @RequestMapping(
+            value = "/users",
+            method = RequestMethod.GET
+    )
+    @ResponseBody
+    @Nonnull
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
 }

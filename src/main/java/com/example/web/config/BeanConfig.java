@@ -8,6 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import org.springframework.jdbc.core.JdbcOperations;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Arrays;
@@ -32,7 +35,7 @@ public class BeanConfig {
     }
 
     @Bean
-    public BasicDataSource basicDataSource() {
+    public BasicDataSource dataSource() {
         String driverClassName = env.getProperty("database.driverClassName");
         String username = env.getProperty("database.username");
         String password = env.getProperty("database.password");
@@ -50,5 +53,17 @@ public class BeanConfig {
         dataSource.setTestWhileIdle(true);
 
         return dataSource;
+    }
+
+    @Bean
+    public DataSourceTransactionManager transactionManager() {
+        BasicDataSource dataSource = dataSource();
+        return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean
+    public JdbcOperations jdbcOperations() {
+        BasicDataSource dataSource = dataSource();
+        return new JdbcTemplate(dataSource);
     }
 }
