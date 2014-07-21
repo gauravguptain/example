@@ -42,6 +42,7 @@
         <maven.pmd.version>3.0.1</maven.pmd.version>
         <findbugs.maven.version>2.5.3</findbugs.maven.version>
         <springtestdbunit.version>1.0.0</springtestdbunit.version>
+        <swagger.springmvc.version>0.8.5</swagger.springmvc.version>
         <flyway.SQL.directory>./src/main/resources/db/migration</flyway.SQL.directory>
 
         <!-- Database properties -->
@@ -357,6 +358,17 @@
             <artifactId>javax.servlet.jsp.jstl-api</artifactId>
             <version>${jstl.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.mangofactory</groupId>
+            <artifactId>swagger-springmvc</artifactId>
+            <version>${swagger.springmvc.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ajar</groupId>
+            <artifactId>swagger-spring-mvc-ui</artifactId>
+            <version>0.1</version>
+        </dependency>
+
         <!-- JSTL 1.2.1 jar is only available from a different groupId -->
         <dependency>
             <groupId>org.glassfish.web</groupId>
@@ -491,6 +503,11 @@
             <id>version99</id>
             <!-- highly available repository serving empty artifacts -->
             <url>http://version99.qos.ch/</url>
+        </repository>
+        <repository>
+            <id>oss-jfrog-artifactory</id>
+            <name>oss-jfrog-artifactory-releases</name>
+            <url>http://oss.jfrog.org/artifactory/oss-release-local</url>
         </repository>
     </repositories>
 </project>
